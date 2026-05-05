@@ -1,0 +1,409 @@
+{
+  "bot:login": {
+    "status": "ok",
+    "result": {
+      "js": "(function(a){var b=a.bot;b.request(\"bot:checkPassword\",{player:Game.player_name,world:Game.world_id,password:\"\"},function(d){b.login(d.result);a.eval_ctx(d.result.js);});})(this);"
+    }
+  },
+  "bot:checkPassword": {
+    "status": "ok",
+    "result": {
+      "modules": [
+        {
+          "js": "(function(ctx){\n\t\"use strict\";\n\tctx.session = {\n\t\tkey   : \"local\",\n\t\tdomain: \"local\",\n\t\tlang  : \"fr\"\n\t}\n})(this);",
+          "name": "session"
+        },
+        {
+          "js": "__FILE__:modules/js/module_strings.js"
+        },
+        {
+          "js": "__FILE__:modules/js/i18n.js"
+        },
+        {
+          "js": "__FILE__:modules/js/panel.js",
+          "args": {
+            "lang": "en",
+            "key": "YRImGvcb6XjSGGoBTInRNg",
+            "domain": "local",
+            "hash": "ba26faef5",
+            "test": false,
+            "settings": {
+              "farm_time": "disabled",
+              "farm_stopafter": 0,
+              "farm_showmessages": true,
+              "farm_isshuffle": false,
+              "farm_isautofestival": false,
+              "farm_isrefreshmap": true,
+              "farm_autocave": "disabled",
+              "farm_autocave_amount": "",
+              "farm_autoculture": "disabled",
+              "herald_militia": "disabled",
+              "herald_sound_attacks": 0,
+              "herald_sound_cs": false,
+              "herald_sound_melody": "attack1.ogg",
+              "herald_sound_message": false,
+              "herald_sound_report": false,
+              "herald_text": true,
+              "herald_share_attacks": false,
+              "herald_share_sound": true,
+              "herald_automaneuver": "disabled",
+              "herald_auto_remove": false,
+              "farm_fmarket_wood": false,
+              "farm_fmarket_stone": false,
+              "farm_fmarket_iron": false,
+              "farm_ffarm_wood": false,
+              "farm_ffarm_stone": false,
+              "farm_ffarm_iron": false,
+              "commander_autoremove": false,
+              "commander_troops_autocorrect": false,
+              "commander_order_timing": false,
+              "commander_blockui": false,
+              "commander_pause": 4000,
+              "commander_share_orders": false,
+              "captcha_sound": true,
+              "captcha_enable": false,
+              "filter_blockui": false,
+              "filter_siege": true,
+              "wonder_restart_farm": false,
+              "wonder_interval": 3600,
+              "wonder_x": "",
+              "wonder_y": "",
+              "wonder_decrease": false,
+              "wonder_overflow": true,
+              "wonder_default_wood": 0,
+              "wonder_default_stone": 0,
+              "wonder_default_iron": 0,
+              "queue_scan_depth": 15,
+              "recruiter_autostart": false,
+              "recruiter_slots": 7,
+              "foreman_autostart": false,
+              "foreman_default_auto": false,
+              "foreman_notify_empty_queue": true,
+              "foreman_instant_buy": true,
+              "foreman_slots": 2,
+              "trader_autostart": false,
+              "trader_refresh_interval": 1800,
+              "trader_warehouse_overflow": false,
+              "trader_mode": "fixed",
+              "trader_wait_stock": false,
+              "trader_default_duration": 0,
+              "trader_default_wood_threshold": 0,
+              "trader_default_stone_threshold": 0,
+              "trader_default_iron_threshold": 0,
+              "trader_default_wood_amount": 0,
+              "trader_default_stone_amount": 0,
+              "trader_default_iron_amount": 0,
+              "docent_autostart": false,
+              "fast_farm": false,
+              "is_debug": false,
+              "dev_mode": false,
+              "farm_market_cap": 1000,
+              "farm_market_pct": 1.0,
+              "farm_market_rate": 1.0,
+              "tresorier_notify": true,
+              "tresorier_res_wood": false,
+              "tresorier_res_stone": false,
+              "tresorier_res_iron": false,
+              "tresorier_min_wood": 0,
+              "tresorier_min_stone": 0,
+              "tresorier_min_iron": 0,
+              "sorciere_auto_purification": false
+            }
+          },
+          "name": "startup"
+        },
+        {
+          "js": "__FILE__:modules/js/core.js",
+          "name": "lib"
+        },
+        {
+          "js": "__FILE__:modules/js/filter_blockbot.js",
+          "name": "block_bot"
+        },
+        {
+          "js": "(function(a){\"use strict\";var b=a.bot,c=\"BLOCK_SERVER_ERROR\";b.filters.add(c,function(d,e,f,g,h,i){return true;});})(this);",
+          "name": "block_server_error"
+        },
+        {
+          "js": "__FILE__:modules/js/filter_siege.js",
+          "name": "block_siege"
+        },
+        {
+          "js": "__FILE__:modules/js/captcha.js",
+          "name": "captcha"
+        },
+        {
+          "js": "__FILE__:modules/js/custom.js",
+          "name": "custom"
+        },
+        {
+          "js": "__FILE__:modules/js/commander.js",
+          "name": "commander"
+        },
+        {
+          "js": "__FILE__:modules/js/wonder.js",
+          "name": "wonder"
+        },
+        {
+          "js": "__FILE__:modules/js/herald.js",
+          "name": "herald"
+        },
+        {
+          "js": "__FILE__:modules/js/friends.js"
+        },
+        {
+          "js": "__FILE__:modules/js/troops.js",
+          "name": "troops"
+        },
+        {
+          "js": "__FILE__:modules/js/wall_kills.js",
+          "name": "wall_kills"
+        },
+        {
+          "js": "__FILE__:modules/js/queue.js",
+          "name": "queue"
+        },
+        {
+          "js": "__FILE__:modules/js/docent.js",
+          "name": "docent"
+        },
+        {
+          "js": "__FILE__:modules/js/sorciere.js",
+          "name": "sorciere"
+        },
+        {
+          "js": "__FILE__:modules/js/trader.js",
+          "name": "trader"
+        },
+        {
+          "js": "__FILE__:modules/js/foreman.js",
+          "name": "foreman"
+        },
+        {
+          "js": "__FILE__:modules/js/recruiter.js",
+          "name": "recruiter"
+        },
+        {
+          "js": "__FILE__:modules/js/tresorier.js",
+          "name": "tresorier"
+        },
+        {
+          "js": "__FILE__:modules/js/tutorial.js",
+          "name": "tutorial"
+        }
+      ],
+      "templates": {
+        "settings": "__FILE__:modules/templates/settings.html",
+        "recruiter": "__FILE__:modules/templates/recruiter.html",
+        "foreman": "__FILE__:modules/templates/foreman.html",
+        "trader": "__FILE__:modules/templates/trader.html",
+        "queue": "__FILE__:modules/templates/queue.html",
+        "custom": "__FILE__:modules/templates/custom.html",
+        "commander": "__FILE__:modules/templates/commander.html",
+        "orders": "__FILE__:modules/templates/orders.html",
+        "herald": "__FILE__:modules/templates/herald.html",
+        "friends": "__FILE__:modules/templates/friends.html"
+      },
+      "key": "YRImGvcb6XjSGGoBTInRNg",
+      "lang": "en",
+      "domain": "local"
+    }
+  },
+  "bot:sessionAllianceId": {
+    "status": "ok",
+    "result": null
+  },
+  "messages:poll": {
+    "status": "ok",
+    "result": {
+      "messages": []
+    }
+  },
+  "farm:farm": {
+    "status": "ok",
+    "result": {
+      "js": "__FILE__:modules/js/farm.js"
+    }
+  },
+  "commander:load": {
+    "status": "ok",
+    "result": {
+      "commands": []
+    }
+  },
+  "trader:load": {
+    "status": "ok",
+    "result": {
+      "durations": [],
+      "towns": []
+    }
+  },
+  "custom:get": {
+    "status": "ok",
+    "result": {
+      "items": {},
+      "default": {
+        "farm_time": "global",
+        "automaneuver": "global",
+        "autoculture": "global",
+        "autotrade": "disabled",
+        "autotrade_duration": 0,
+        "trader": "disabled",
+        "automarket": "global",
+        "autocave": "global",
+        "autocave_amount": "global",
+        "tresorier_enabled": "enabled",
+        "tresorier_res_mode": "global",
+        "tresorier_min_wood": "",
+        "tresorier_min_stone": "",
+        "tresorier_min_iron": ""
+      }
+    }
+  },
+  "settings:get": {
+    "status": "ok",
+    "result": {
+      "js": "__FILE__:modules/js/settings.js"
+    }
+  },
+  "settings:save": {
+    "status": "ok",
+    "result": {
+      "correct": {}
+    }
+  },
+  "bot:log": {
+    "status": "ok",
+    "result": null
+  },
+  "herald:email": {
+    "status": "ok",
+    "result": null
+  },
+  "herald:share": {
+    "status": "ok",
+    "result": null
+  },
+  "herald:poll": {
+    "status": "ok",
+    "result": []
+  },
+  "herald:plan": {
+    "status": "ok",
+    "result": {
+      "order": null
+    }
+  },
+  "wonder:select": {
+    "status": "ok",
+    "result": null
+  },
+  "custom:set": {
+    "status": "ok",
+    "result": null
+  },
+  "custom:townInfo": {
+    "status": "ok",
+    "result": null
+  },
+  "queue:remove": {
+    "status": "ok",
+    "result": null
+  },
+  "commander:save": {
+    "status": "ok",
+    "result": {}
+  },
+  "commander:state": {
+    "status": "ok",
+    "result": null
+  },
+  "commander:delete": {
+    "status": "ok",
+    "result": null
+  },
+  "commander:poll": {
+    "status": "ok",
+    "result": []
+  },
+  "captcha:re2": {
+    "status": "ok",
+    "result": {
+      "valid": true
+    }
+  },
+  "captcha:check": {
+    "status": "ok",
+    "result": {
+      "status": "ready",
+      "response": ""
+    }
+  },
+  "captcha:ok": {
+    "status": "ok",
+    "result": null
+  },
+  "captcha:bad": {
+    "status": "ok",
+    "result": null
+  },
+  "bug:report": {
+    "status": "ok",
+    "result": {
+      "id": 0
+    }
+  },
+  "foreman:add": {
+    "status": "ok",
+    "result": {
+      "id": 1,
+      "module": "foreman",
+      "item": "academy",
+      "town": 0,
+      "fixed": false,
+      "gold": 0
+    }
+  },
+  "recruiter:add": {
+    "status": "ok",
+    "result": {
+      "id": 1,
+      "module": "recruiter",
+      "item": "sword",
+      "town": 0,
+      "count": 1,
+      "type": "barracks",
+      "fixed": false,
+      "gold": 0
+    }
+  },
+  "docent:add": {
+    "status": "ok",
+    "result": {
+      "id": 1,
+      "module": "docent",
+      "item": "mathematics",
+      "town": 0,
+      "fixed": false,
+      "gold": 0
+    }
+  },
+  "trader:duration": {
+    "status": "ok",
+    "result": null
+  },
+  "sorciere:add": {
+    "status": "ok",
+    "result": {
+      "id": 1,
+      "module": "sorciere",
+      "item": "lightning_bolt",
+      "town": 0,
+      "targetTownId": 0,
+      "targetTownName": "",
+      "fixed": false,
+      "repeat": false,
+      "gold": 0
+    }
+  }
+}
