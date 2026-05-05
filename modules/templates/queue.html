@@ -1,0 +1,168 @@
+
+<div ng-app="bot" ng-controller="QueueController" class="queue2">
+
+    
+    <div class="caption">
+      <h2>{{t('File d\'attente')}} ({{data.town.name}})</h2>
+    </div>
+    
+
+    <div class="bs-queue-items"><div class="clearfix">
+      <div ng-repeat="q in data.queue|filter:filterQueue()|orderBy:['-fixed', 'id'] track by q.id" ng-switch on="q.module">
+
+
+        
+        <div ng-switch-when="recruiter" class="qitem bs-queue-item {{q.module}} unit">
+          <div class="q-badge" ng-class="{auto: q.fixed}"></div>
+          <div class="unit_icon40x40 {{q.item}} qicon" ng-click="remove(q)"
+               ng-attr-data-tooltip="{{data.unitsMap[q.item].name + (data.unitsMap[q.item].desc ? ' â€” ' + data.unitsMap[q.item].desc : '')}}">
+            <div class="power_icon12x12 usePower" ng-class="q.type=='barracks' ? 'fertility_improvement' : 'call_of_the_ocean'" ng-show="q.usePower" ></div>
+            <span class="unit_order_count_{{q.item}}">{{q.repeat ? "&infin;" : ""}}{{q.count}}</span>
+          </div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+            <span ng-show="q.gold>0" class="gold" title="Utiliser de l'or pour rÃ©duire le temps {{q.gold}} fois">{{q.gold}}</span>
+          </div>
+        </div>
+        
+
+        
+        <div ng-switch-when="foreman" class="qitem bs-queue-item {{q.module}} unit">
+          <div class="q-badge" ng-class="{auto: q.fixed}"></div>
+          <div class="building_icon40x40 {{q.item}} qicon" ng-click="remove(q)"
+               ng-attr-data-tooltip="{{data.buildings[q.item].name + (data.buildings[q.item].desc ? ' â€” ' + data.buildings[q.item].desc : '')}}"></div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+            <span ng-show="q.gold>0" class="gold" title="Utiliser de l'or {{q.gold}} fois">{{q.gold}}</span>
+          </div>
+        </div>
+        
+
+        
+        <div ng-switch-when="trader" class="qitem bs-queue-item {{q.module}} unit">
+          <div class="q-badge" ng-class="{auto: q.fixed}"></div>
+          <div style="position:relative;display:inline-block;width:40px;height:40px;flex-shrink:0;"
+               class="qicon"
+               ng-click="remove(q)"
+               ng-attr-data-tooltip="{{t('Retirer')}} ({{t('vers')}}: {{q.toName || q.to}}, {{t('bois')}}: {{q.wood}}, {{t('pierre')}}: {{q.stone}}, {{t('argent')}}: {{q.iron}})">
+            <div class="tile-icon trader" style="width:40px;height:40px;pointer-events:none;"></div>
+            <span ng-show="q.repeat" style="position:absolute;bottom:-2px;right:-2px;font-size:8pt;color:#f0d080;font-weight:700;line-height:1;background:#0d1117;border-radius:3px;padding:0 1px;pointer-events:none;">âˆž</span>
+            <span ng-show="q.fixed" style="position:absolute;top:-2px;left:-2px;width:10px;height:10px;background:#e05555;border-radius:50%;border:1px solid rgba(0,0,0,0.5);pointer-events:none;"></span>
+          </div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+          </div>
+        </div>
+        
+
+        
+        <div ng-switch-when="docent" class="qitem bs-queue-item {{q.module}} unit">
+          <div class="q-badge" ng-class="{auto: q.fixed}"></div>
+          <div class="research_icon research40x40 {{q.item}}" ng-click="remove(q)"
+               ng-attr-data-tooltip="{{data.researches[q.item].name + (data.researches[q.item].desc ? ' â€” ' + data.researches[q.item].desc : '')}}"></div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+            <span ng-show="q.gold>0" class="gold" title="Utiliser de l'or {{q.gold}} fois">{{q.gold}}</span>
+          </div>
+        </div>
+        
+
+
+      </div>
+    </div></div>
+
+
+    <div class="add" style="margin-top: 10px; padding: 4px; text-align: left;">
+      <fieldset>
+        <legend>{{t('Ajouter')}}</legend>
+
+        <div style="width: 100px; display: inline-block; float: left;">
+          <input type="radio" ng-model="data.module" value="recruiter" />{{t('Recruteur')}}<br/>
+          <input type="radio" ng-model="data.module" value="foreman" />{{t('Constructeur')}}<br/>
+          <input type="radio" ng-model="data.module" value="trader" />{{t('Marchand')}}<br/>
+          <input type="radio" ng-model="data.module" value="docent" />{{t('Docent')}}<br/>
+        </div>
+
+        
+        <div class="module" ng-show="data.module=='foreman'">
+          <b>{{t('Constructeur')}}</b>
+
+          <br/><br/><span class="select-wrap"><select ng-model="data.foreman.item">
+            <option ng-repeat="item in data.buildings" ng-value="item.id">{{item.name}}</option>
+          </select></span>
+
+          <br/><span title="{{t('PrioritÃ© automatique')}}">{{t('Auto')}} <input type="checkbox" ng-model="data.foreman.auto" /></span>,
+          <button ng-click="addForeman(data.foreman)" ng-disabled="!data.foreman.item">{{t('Ajouter')}}</button>
+        </div>
+        
+
+        
+        <div class="module" ng-show="data.module=='recruiter'" style="margin-left: 14px; float: left;">
+          <b>{{t('Recruteur')}}</b>
+
+          <br/><br/><input type="radio" ng-model="data.recruiter.type" value="barracks" ng-change="data.recruiter.item=null"> {{t('Caserne')}}
+          <input type="radio" ng-model="data.recruiter.type" value="docks" ng-change="data.recruiter.item=null"> {{t('Chantier naval')}}
+
+          <br/>{{t('UnitÃ©')}} <span class="select-wrap"><select ng-model="data.recruiter.item">
+            <option ng-repeat="item in data.units|filter:{type: data.recruiter.type}" ng-value="item.id">{{item.name}}</option>
+          </select></span>
+
+          <br/>{{t('QuantitÃ©')}} <input type="text" size="4" maxlength="4" style="width: 40px;" ng-model="data.recruiter.count" />,
+
+          <br/><span title="{{t('Pouvoir divin requis')}}">{{t('Utiliser pouvoir')}} <input type="checkbox" ng-model="data.recruiter.usePower" /></span>,
+          <span title="{{t('RÃ©pÃ©ter aprÃ¨s dÃ©marrage')}}">{{t('RÃ©pÃ©ter')}} <input type="checkbox" ng-model="data.recruiter.repeat" /></span>,
+          <span title="{{t('PrioritÃ© automatique')}}">{{t('auto')}} <input type="checkbox" ng-model="data.recruiter.auto"/></span>
+
+          <br/><button ng-click="addRecruiter(data.recruiter)" ng-disabled="!(data.recruiter.item && data.recruiter.count > 0 && data.recruiter.type)">{{t('Ajouter')}}</button>
+        </div>
+        
+
+        
+        <div class="module" ng-show="data.module=='trader'">
+          <b>{{t('Marchand')}}</b>
+
+          <br/><br/>{{t('Ville')}} <input type="text" ng-model="data.trader.to" />
+
+          <br/>{{t('bois')}} <input type="text" maxlength="4" ng-model="data.trader.wood" style="width: 40px;"/>,
+          pierre <input type="text" maxlength="4" ng-model="data.trader.stone" style="width: 40px;"/>,
+          argent <input type="text" maxlength="4" ng-model="data.trader.iron" style="width: 40px;"/>
+
+          <div class="bs-trader-error" ng-show="data.trader.errorMsg" style="margin: 4px 0;">{{data.trader.errorMsg}}</div>
+
+          <br/><span title="{{t('PrioritÃ© automatique')}}">{{t('Prioritaire')}} <input type="checkbox" ng-model="data.trader.fixed" /></span>
+          <br/><span title="{{t('RÃ©pÃ©ter aprÃ¨s dÃ©marrage')}}">{{t('RÃ©pÃ©ter')}} <input type="checkbox" ng-model="data.trader.repeat" /></span>
+
+          <br/><button ng-click="addTrader(data.trader)" ng-disabled="!(data.trader.to>0)">{{t('Ajouter')}}</button>
+
+        </div>
+        
+
+        
+        <div class="module" ng-show="data.module=='docent'">
+          <b>{{t('Docent')}}</b>
+
+          <br/><br/>{{t('Recherche')}} <span class="select-wrap"><select ng-model="data.docent.item">
+            <option ng-repeat="item in data.researches" ng-value="item.id">{{item.name}}</option>
+          </select></span>
+
+          <br/><span title="{{t('PrioritÃ© automatique')}}">{{t('auto')}} <input type="checkbox" ng-model="data.docent.auto"/></span>,
+
+          <br/><button ng-click="addDocent(data.docent)" ng-disabled="!data.docent.item">{{t('Ajouter')}}</button>
+
+        </div>
+        
+
+
+
+      </fieldset>
+    </div>
+
+    <div class="footer" style="margin-bottom: 5px; margin-top: 10px;">
+      <button ng-click="toggleTrader()" ng-class="{'active': data.trader.active}" title="{{t('Activer/dÃ©sactiver le module Marchand')}}">
+        {{t('Marchand')}} : {{data.trader.active ? 'ON' : 'OFF'}}
+      </button>
+      <button ng-click="close()">{{t('Fermer')}}</button>
+    </div>
+
+
+</div>
