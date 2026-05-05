@@ -1,0 +1,120 @@
+
+<div ng-app="bot" new ng-controller="commander">
+  <hr style="border:none;border-top:1px solid rgba(201,168,76,0.25);margin:6px 0 4px;"/>
+
+  <div style="background:linear-gradient(160deg,#0d1117,#151c26);border:1px solid rgba(201,168,76,0.25);border-top:2px solid #c9a84c;border-radius:8px;font-family:Arial,sans-serif;font-size:8pt;color:#d4c5a0;overflow:hidden;">
+
+    <div style="background:rgba(0,0,0,0.25);padding:6px 12px;border-bottom:1px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:8pt;font-weight:700;color:#c9a84c;letter-spacing:0.8px;text-transform:uppercase;font-family:Georgia,serif;">
+        <span ng-show="data.actionType=='attack'">{{t('âš”ï¸ Commandant â€” Planification')}}</span>
+        <span ng-show="data.actionType=='support'">{{t('ðŸ›¡ï¸ Commandant â€” Soutien planifiÃ©')}}</span>
+        <span ng-show="!data.actionType">{{t('âš”ï¸ Commandant â€” Planification')}}</span>
+      </div>
+      <div style="font-family:Georgia,serif;font-size:7pt;font-weight:700;color:#8a6a1a;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(138,106,26,0.1));border:1px solid rgba(201,168,76,0.25);border-radius:4px;padding:2px 7px;">{{t('GrepoPlus')}}</div>
+    </div>
+
+    <div style="padding:8px 12px;display:flex;flex-direction:column;gap:8px;">
+
+      <!-- DATE D'ARRIVÃ‰E -->
+      <div>
+        <div style="font-size:7pt;font-weight:700;color:#c9a84c;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">{{t("Date d'arrivÃ©e")}}</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span class="select-wrap"><select ng-model="data.o.day" style="background:#1a2332;color:#f0e8d0;border:1px solid rgba(201,168,76,0.3);border-radius:5px;padding:2px 22px 2px 5px;font-size:7.5pt;appearance:none;-webkit-appearance:none;">
+            <option value="0" selected>{{t("Aujourd'hui")}}</option>
+            <option value="1">{{t('Demain')}}</option>
+            <option value="2">{{t('+2 jours')}}</option>
+            <option value="3">{{t('+3 jours')}}</option>
+            <option value="4">{{t('+4 jours')}}</option>
+          </select></span>
+          <div style="display:flex;align-items:center;gap:3px;">
+            <input type="number" min="0" max="23" ng-model="data.o.hour"
+              ng-style="(data.o.hour !== '' && (data.o.hour < 0 || data.o.hour > 23)) ? {'border-color':'#e05555'} : {'border-color':'rgba(201,168,76,0.3)'}"
+              style="width:42px;background:#1a2332;color:#f0e8d0;border:1px solid;border-radius:4px;padding:2px 4px;text-align:center;font-size:8pt;-moz-appearance:textfield;" class="no-spinner" placeholder="HH"/>
+            <span style="color:#c9a84c;font-weight:700;">:</span>
+            <input type="number" min="0" max="59" ng-model="data.o.minute"
+              ng-style="(data.o.minute !== '' && (data.o.minute < 0 || data.o.minute > 59)) ? {'border-color':'#e05555'} : {'border-color':'rgba(201,168,76,0.3)'}"
+              style="width:42px;background:#1a2332;color:#f0e8d0;border:1px solid;border-radius:4px;padding:2px 4px;text-align:center;font-size:8pt;-moz-appearance:textfield;" class="no-spinner" placeholder="MM"/>
+            <span style="color:#c9a84c;font-weight:700;">:</span>
+            <input type="number" min="0" max="59" ng-model="data.o.second"
+              ng-style="(data.o.second !== '' && (data.o.second < 0 || data.o.second > 59)) ? {'border-color':'#e05555'} : {'border-color':'rgba(201,168,76,0.3)'}"
+              style="width:42px;background:#1a2332;color:#f0e8d0;border:1px solid;border-radius:4px;padding:2px 4px;text-align:center;font-size:8pt;-moz-appearance:textfield;" class="no-spinner" placeholder="SS"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- SORTS -->
+      <div ng-show="data.actionType == 'attack'">
+        <div style="font-size:7pt;font-weight:700;color:#c9a84c;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+          {{t('Sort')}} divin
+          <span ng-click="openCommanderSpellPanel($event)" class="hw-opt hw-spell-btn" style="text-transform:none;font-size:6.5pt;cursor:pointer;">
+            <span class="gfb-favor-icon" style="display:inline-block;vertical-align:middle;margin-right:2px;"></span>
+            <span ng-show="data.o.spell && data.o.spell !== 'disabled'">{{data.spellName}} âœŽ</span>
+            <span ng-show="!data.o.spell || data.o.spell === 'disabled'">{{t('Choisir...')}}</span>
+          </span>
+        </div>
+        <div ng-show="data.o.spell && data.o.spell !== 'disabled'" style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,0.2);border:1px solid rgba(201,168,76,0.15);border-radius:5px;">
+          <span ng-class="'power_icon16x16 ' + data.o.spell" style="display:inline-block;width:14px;height:14px;flex-shrink:0;"></span>
+          <span style="font-size:6.5pt;color:#d4c5a0;">{{data.spellName}}</span>
+          <span ng-click="data.o.spell='disabled';data.o.spells=[];data.spellName=''" style="margin-left:auto;cursor:pointer;color:#7a6e5a;font-size:9pt;" title="{{t('Retirer le sort')}}">âœ•</span>
+        </div>
+      </div>
+
+      <!-- TOLÃ‰RANCE D'ARRIVÃ‰E (visible seulement si calage des ordres activÃ©) -->
+      <div ng-show="isTimingEnabled()" style="padding:6px 8px;background:rgba(91,141,217,0.06);border:1px solid rgba(91,141,217,0.2);border-radius:5px;">
+        <div style="font-size:7pt;font-weight:700;color:#5b8dd9;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">{{t("â³ TolÃ©rance d'arrivÃ©e")}}</div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <!-- Secondes -->
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span style="font-size:6.5pt;color:#9ab0d0;">{{t('DÃ©calage max :')}}</span>
+            <span class="select-wrap"><select ng-model="data.o.tolerance_sec" style="background:#1a2332;color:#f0e8d0;border:1px solid rgba(91,141,217,0.3);border-radius:4px;padding:2px 20px 2px 5px;font-size:7.5pt;appearance:none;-webkit-appearance:none;">
+              <option value="0">0s</option>
+              <option value="1">1s</option>
+              <option value="2">2s</option>
+              <option value="3">3s</option>
+            </select></span>
+          </div>
+          <!-- Direction -->
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span style="font-size:6.5pt;color:#9ab0d0;">{{t('Direction :')}}</span>
+            <span class="select-wrap"><select ng-model="data.o.tolerance_dir" style="background:#1a2332;color:#f0e8d0;border:1px solid rgba(91,141,217,0.3);border-radius:4px;padding:2px 20px 2px 5px;font-size:7.5pt;appearance:none;-webkit-appearance:none;">
+              <option value="before">{{t('Avant')}}</option>
+              <option value="after">{{t('AprÃ¨s')}}</option>
+              <option value="both">{{t('Les deux')}}</option>
+            </select></span>
+          </div>
+        </div>
+        <div style="font-size:6pt;color:#5a6e88;margin-top:4px;">{{t("Accepte un Ã©cart sur l'heure d'arrivÃ©e rÃ©elle vs prÃ©vue")}}</div>
+      </div>
+
+      <!-- NOTIFICATION -->
+      <div>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" ng-model="data.o.notify"/>
+          <div>
+            <div style="font-size:7pt;font-weight:700;color:#c9a84c;text-transform:uppercase;letter-spacing:0.4px;">{{t('ðŸ”” Notification avant envoi')}}</div>
+            <div style="font-size:6pt;color:#7a6e5a;">{{t('Affiche une alerte quelques secondes avant le dÃ©part')}}</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- VILLES PROCHES -->
+      <div ng-show="data.nearest.length>0" ng-switch="data.target.additional" style="font-size:7.5pt;padding:5px 8px;background:rgba(0,0,0,0.2);border:1px solid rgba(201,168,76,0.1);border-radius:5px;">
+        <div ng-switch-when="nearest">
+          <span style="color:#c9a84c;font-weight:700;">{{t('CitÃ©s proches :')}} </span><i class="bs-help"><span class="bs-help-q">?</span><span class="bs-tooltip">{{nearestTooltip}}</span></i>
+          <span ng-repeat="t in data.nearest"><span ng-click="switch_town(t.id, $event)" style="color:#f0d080;text-decoration:underline;cursor:pointer;font-weight:700;">{{t.name}}</span>{{$last ? "" : ", "}}</span>
+        </div>
+        <div ng-switch-default>
+          <span style="color:#c9a84c;font-weight:700;">{{data.target.additional}} : </span>
+          <span ng-repeat="t in data.nearest"><span ng-click="switch_town(t.id, $event)" style="color:#f0d080;text-decoration:underline;cursor:pointer;font-weight:700;">{{t.name}}</span> ({{t.total}}){{$last ? "" : ", "}}</span>
+        </div>
+      </div>
+
+      <!-- BOUTONS -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding-top:4px;border-top:1px solid rgba(201,168,76,0.1);">
+        <button type="button" ng-click="schedule()" style="background:rgba(201,168,76,0.15);color:#c9a84c;border:1px solid rgba(201,168,76,0.4);border-radius:5px;padding:4px 14px;font-size:7.5pt;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;">{{t('â± Planifier')}}</button>
+        <button type="button" ng-click="nearest()" style="background:rgba(91,141,217,0.1);color:#5b8dd9;border:1px solid rgba(91,141,217,0.3);border-radius:5px;padding:4px 12px;font-size:7.5pt;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.3px;">{{t('ðŸ“ CitÃ©s proches')}}</button>
+      </div>
+
+    </div>
+  </div>
+</div>
