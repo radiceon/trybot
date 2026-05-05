@@ -1,0 +1,82 @@
+
+<div ng-app="bot" new class="window" ng-controller="commanderOrdersController">
+
+  <div class="header">
+    <div class="actions">
+      <div class="control test"     ng-click="test()"              title="{{t('Mode test â€” simuler des ordres')}}" ng-show="devMode()"></div>
+      <div class="control start"    ng-class="{active: data.sort=='startAt'}"   ng-click="sort('startAt')"   title="{{t('Trier par heure de dÃ©part')}}"></div>
+      <div class="control arrival"  ng-class="{active: data.sort=='arrivalAt'}" ng-click="sort('arrivalAt')" title="{{t('Trier par heure d\'arrivÃ©e')}}"></div>
+      <div class="control success"  ng-class="{active: data.sort=='state'}"     ng-click="sort('state')"     title="{{t('Trier par statut (succÃ¨s en premier)')}}"></div>
+    </div>
+    <div class="caption">{{t('ðŸš© Ordres de combat')}}</div>
+    <div class="controls">
+      <div class="control hw-action-filter" ng-class="{active: data.actionFilter=='all'}"     ng-click="data.actionFilter='all'"     title="{{t('Tous types')}}">âœ¦</div>
+      <div class="control hw-action-filter" ng-class="{active: data.actionFilter=='attack'}"  ng-click="data.actionFilter='attack'"  title="{{t('Attaques')}}">âš”ï¸</div>
+      <div class="control hw-action-filter" ng-class="{active: data.actionFilter=='support'}" ng-click="data.actionFilter='support'" title="{{t('Soutiens')}}">ðŸ›¡ï¸</div>
+      <div class="control hw-action-filter" ng-class="{active: data.actionFilter=='colony'}"  ng-click="data.actionFilter='colony'"  title="{{t('Colonisations')}}">ðŸ›ï¸</div>
+      <div class="control close" ng-click="close()" title="{{t('Fermer')}}"></div>
+    </div>
+  </div>
+
+  <div class="hw-filters">
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='all'}"      ng-click="data.filter='all'">{{t('Tous')}}<span class="hw-count-badge hw-count-badge-all" ng-show="(data.orders|filter:filterBadge).length > 0">{{(data.orders|filter:filterBadge).length}}</span></label>
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='own'}"      ng-click="data.filter='own'">{{t('Mes ordres')}}<span class="hw-count-badge" ng-show="(data.orders|filter:filterBadge|filter:{external:false}).length > 0">{{(data.orders|filter:filterBadge|filter:{external:false}).length}}</span></label>
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='external'}" ng-click="data.filter='external'">{{t('Amis')}}<span class="hw-count-badge hw-count-badge-friend" ng-show="(data.orders|filter:filterBadge|filter:{external:true}).length > 0">{{(data.orders|filter:filterBadge|filter:{external:true}).length}}</span></label>
+    <input class="hw-search hw-search-inline" type="text" ng-model="data.search" placeholder="{{t('ðŸ” Ville ou joueur...')}}" />
+  </div>
+
+  <div class="hw-orders">
+    <div class="hw-empty" ng-show="(data.orders|filter:filterOrders|filter:filterTowns).length === 0">
+      <div class="hw-empty-icon">ðŸ“‹</div>
+      <div>{{t('Aucun ordre en attente')}}</div>
+    </div>
+    <div class="hw-order" ng-repeat="order in data.orders|orderBy:data.predicate|filter:filterOrders|filter:filterTowns"
+         ng-class="{'hw-order-shared': order.player, 'hw-order-success': order.state==='success', 'hw-order-cancelled-offline': order.state==='cancelled_offline'}">
+      <div class="hw-order-header">
+        <span class="hw-badge shared-badge" ng-show="order.player">{{t('Ami')}}</span>
+        <span class="hw-badge success-badge" ng-show="order.state==='success'">{{t('âœ… RÃ©alisÃ©')}}</span>
+        <span class="hw-badge cancelled-offline-badge" ng-show="order.state==='cancelled_offline'">{{t('âŒ AnnulÃ©e')}}</span>
+        <span class="hw-badge done-badge"    ng-show="order.external && (order.done || order.state === 'abort' || order.state === 'cancel' || order.state === 'error')">{{t('â›” TerminÃ©e')}}</span>
+        <span ng-show="order.notify" title="{{t('Notification avant envoi activÃ©e')}}" style="font-size:9pt;line-height:1;margin-left:2px;">ðŸ””</span>
+        <!-- IcÃ´ne sort -->
+        <span style="flex:1;display:flex;align-items:center;justify-content:center;">
+          <span ng-show="(order._cmd && order._cmd.spell) || order.spell"
+                ng-class="'power_icon12x12 ' + (order._cmd ? order._cmd.spell : order.spell)"
+                style="display:inline-block;width:12px;height:12px;"
+                ng-attr-data-tooltip-html="{{spellTooltipHtml(order._cmd ? order._cmd.spell : order.spell)}}"></span>
+        </span>
+        <span ng-show="order.order_timing"
+              style="font-size:6pt;color:#5b8dd9;background:rgba(91,141,217,0.1);border:1px solid rgba(91,141,217,0.25);border-radius:3px;padding:1px 5px;line-height:1.4;margin-right:3px;">{{timingLabel(order)}}</span>
+        <span class="hw-remove" ng-click="remove(order)" ng-show="(!order.external && order.state !== 'start') || (order.external && (order.state === 'success' || order.state === 'cancelled_offline' || order.state === 'abort' || order.state === 'cancel' || order.state === 'error' || order.done))" title="{{t('Supprimer cet ordre')}}">âœ•</span>
+      </div>
+      <div class="hw-order-body" ng-bind-html="order.html|unsafe"></div>
+      <div class="hw-order-footer" ng-show="!order.external && order.state === 'wait' && order._cmd"
+           style="display:flex;justify-content:flex-end;padding:2px 6px 2px;">
+        <span class="hw-opt hw-spell-btn"
+              ng-show="order.action !== 'support'"
+              ng-click="openOrderSpellPanel(order, $event)"
+              style="font-size:6pt;"
+              ng-attr-data-tooltip="{{t('Modifier le sort planifiÃ©')}}"><span class="gfb-favor-icon" style="display:inline-block;vertical-align:middle;margin-right:2px;"></span>{{t('Sort')}}</span>
+      </div>
+      <div class="hw-order-status">
+        <span ng-switch="order.state">
+          <span ng-switch-when="wait"    style="color:#f0d080;font-weight:700;">{{t('â³ En attente')}}</span>
+          <span ng-switch-when="start"   style="color:#5b8dd9;font-weight:700;">{{t('ðŸš€ En transit')}}</span>
+          <span ng-switch-when="success" style="color:#4caf6e;font-weight:700;">{{t('âœ… EffectuÃ©')}}</span>
+          <span ng-switch-when="cancel"            style="color:#c9a84c;font-weight:700;">{{t('â†© AnnulÃ©')}}</span>
+          <span ng-switch-when="cancelled_offline" style="color:#e05555;font-weight:700;">{{t('âŒ AnnulÃ©e')}}</span>
+          <span ng-switch-when="abort"             style="color:#e05555;font-weight:700;">{{t('â›” AbandonnÃ©')}}</span>
+          <span ng-switch-when="error"             style="color:#e05555;font-weight:700;">{{t('âŒ Erreur')}}</span>
+          <span ng-switch-default                  style="color:#7a6e5a;font-weight:700;">{{order.state}}</span>
+        </span>
+        <span ng-show="order.status && order.status.length > 0" style="color:#7a6e5a;font-size:7.5pt;"> â€” {{order.status}}</span>
+        <!-- DÃ©part / arrivÃ©e pour les ordres d'amis (pas de status calculÃ© cÃ´tÃ© JS) -->
+        <span ng-show="order.external && order.startAt && order.state === 'wait'" style="color:#7a6e5a;font-size:7.5pt;"> â€” {{format(t('dÃ©part {0} â€” arrivÃ©e {1}'), ts2text(order.startAt), ts2text(order.arrivalAt))}}</span>
+        <span ng-show="order.external && order.startAt && order.state === 'start'" style="color:#5b8dd9;font-size:7.5pt;"> â€” {{format(t('envoyÃ© Ã  {0}'), ts2text(order.startAt))}}</span>
+        <span ng-show="order.external && order.startAt && order.state === 'success'" style="color:#4caf6e;font-size:7.5pt;"> â€” {{format(t('envoyÃ© Ã  {0}'), ts2text(order.startAt))}}</span>
+        <span ng-show="order.external && order.arrivalAt && order.state === 'cancelled_offline'" style="color:#e05555;font-size:7.5pt;"> â€” {{format(t('dÃ©part {0} â€” arrivÃ©e {1}'), ts2text(order.startAt), ts2text(order.arrivalAt))}}</span>
+      </div>
+    </div>
+  </div>
+
+</div>
