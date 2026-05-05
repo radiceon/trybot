@@ -1,0 +1,34 @@
+
+<div ng-app="bot" ng-controller="ForemanController" class="foreman">
+  
+
+  <fieldset>
+
+    <legend>{{t('Constructeur')}}</legend>
+
+    <div class="control">
+      BÃ¢timent <span class="select-wrap"><select ng-model="data.item.item">
+        <option ng-repeat="item in data.items" ng-value="item.item">{{item.name}}</option>
+      </select></span>
+
+      <div style="margin-top: 5px;">
+        <span title="{{t('PrioritÃ© automatique')}}">{{t('Auto')}} <input type="checkbox" ng-model="data.item.auto" /></span>,
+        <button ng-click="add(data.item)" ng-disabled="!data.item.item">{{t('Ajouter')}}</button>
+      </div>
+    </div>
+
+    <div class="queue">
+      <div class="clearfix">
+        <div ng-repeat="q in data.queue|filter:filterQueue()|orderBy:['-fixed', 'id']" class="unit" ng-click="remove(q)">
+          <div class="building_icon40x40 {{q.item}}" ng-attr-data-tooltip="{{data.itemsMap[q.item].name + (data.itemsMap[q.item].desc ? ' â€” ' + data.itemsMap[q.item].desc : '')}}" title="{{data.gameData[q.item].name}}"></div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+            <span ng-show="q.gold>0" class="gold" title="Utiliser de l'or {{q.gold}} fois">{{q.gold}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
+  
+</div>
