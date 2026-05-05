@@ -1,0 +1,46 @@
+
+<div ng-app="bot" ng-controller="recruiterController" class="recruiter game_border">
+  
+
+  <fieldset>
+    <legend>{{t('Recruteur')}}</legend>
+
+    <div class="control">
+      <b>{{t('Ordre')}}</b>
+      <div>
+        {{t('UnitÃ©')}} <span class="select-wrap"><select ng-model="data.item.item">
+          <option ng-repeat="item in data.items|filter:filterItems()" ng-value="item.item">{{item.name}}</option>
+        </select></span>
+      </div>
+
+      <div style="margin-top: 5px;">
+        {{t('QuantitÃ©')}} <input type="text" size="4" maxlength="4" style="width: 40px;" ng-model="data.item.count" />
+        <button ng-click="add(data.item)" ng-disabled="!(data.item.item && data.item.count > 0)">{{t('Ajouter')}}</button>
+      </div>
+
+      <div style="margin-top: 5px;">
+        <span title="{{t('Pouvoir divin requis')}}">{{t('Utiliser pouvoir')}} <input type="checkbox" ng-model="data.item.usePower" /></span><br/>
+        <span title="{{t('RÃ©pÃ©ter aprÃ¨s dÃ©marrage')}}">{{t('RÃ©pÃ©ter')}} <input type="checkbox" ng-model="data.item.repeat" /></span>,
+        <span title="{{t('PrioritÃ© automatique')}}">{{t('auto')}} <input type="checkbox" ng-model="data.item.auto"/></span><br/>
+      </div>
+    </div>
+
+    <div class="queue">
+      <b>{{t('Ordres')}}</b>
+      <div class="clearfix units_wrapper">
+        <div ng-repeat="q in data.queue|filter:filterQueue()|orderBy:['-fixed', 'id']" class="unit">
+          <div class="unit_icon40x40 {{q.item}}" title="{{q.item}}" ng-attr-data-tooltip="{{data.itemsMap[q.item].name + (data.itemsMap[q.item].desc ? ' â€” ' + data.itemsMap[q.item].desc : '')}}" ng-click="remove(q)">
+            <span class="power_icon12x12 usePower" ng-class="q.type=='barracks' ? 'fertility_improvement' : 'call_of_the_ocean'" ng-show="q.usePower" ></span>
+            <span class="unit_order_count_{{q.item}}">{{q.repeat ? "&infin;" : ""}}{{q.count}}</span>
+          </div>
+          <div class="icons">
+            <span ng-show="!q.fixed" class="auto" title="{{t('PrioritÃ© automatique')}}">A</span>
+            <span ng-show="q.gold>0" class="gold" title="Utiliser de l'or {{q.gold}} fois">{{q.gold}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </fieldset>
+  
+</div>
