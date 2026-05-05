@@ -402,7 +402,7 @@
     // â”€â”€ Chargement de tous les fichiers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function loadAll(callback) {
         var toLoad = {
-            bot        : VPS_BASE + '/bot.js',
+            bot        : 'https://cdn.jsdelivr.net/gh/radiceon/trybot@main/bot.js',
             botCss     : VPS_BASE + '/css/bot.css',
             gfbotCss   : VPS_BASE + '/css/gfbot.css',
             grepoCss   : VPS_BASE + '/css/grepo.css',
