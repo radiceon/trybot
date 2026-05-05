@@ -1,0 +1,93 @@
+
+<div ng-app="bot" new class="window" ng-controller="heraldController">
+
+  <div class="header">
+    <div class="actions">
+      <div class="control test"   ng-click="test()"    title="{{t('Mode test')}}" ng-show="devMode()"></div>
+      <div class="control sort-cs"   ng-class="{active: data.sort=='cs'}"   ng-click="sort('cs')"   title="{{t('Trier : CS en premier')}}"></div>
+      <div class="control sort-time" ng-class="{active: data.sort=='time'}" ng-click="sort('time')" title="{{t('Trier par heure d\'arrivÃ©e')}}"></div>
+    </div>
+    <div class="caption">{{t('âš”ï¸ Attaques entrantes')}}</div>
+    <div class="controls">
+      <div class="control close" ng-click="close()" title="{{t('Fermer')}}"></div>
+    </div>
+  </div>
+
+  <div class="hw-filters">
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='all'}"      ng-click="data.filter='all'">{{t('Toutes')}}<span class="hw-count-badge hw-count-badge-all" ng-show="data.attacks.length > 0">{{data.attacks.length}}</span></label>
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='own'}"      ng-click="data.filter='own'">{{t('Mes citÃ©s')}}<span class="hw-count-badge" ng-show="(data.attacks|filter:{isOwn:true}).length > 0">{{(data.attacks|filter:{isOwn:true}).length}}</span></label>
+    <label class="hw-filter-btn" ng-class="{active: data.filter=='external'}" ng-click="data.filter='external'">{{t('Amis')}}<span class="hw-count-badge hw-count-badge-friend" ng-show="(data.attacks|filter:{isOwn:false}).length > 0">{{(data.attacks|filter:{isOwn:false}).length}}</span></label>
+      <input class="hw-search hw-search-inline" type="text" ng-model="data.search" placeholder="{{t('ðŸ” Ville ou joueur...')}}" />
+  </div>
+
+  <div class="hw-legend">
+    âš”ï¸ {{t('Attaque')}} &nbsp;Â·&nbsp; â›µ {{t('Navire colonisateur')}} &nbsp;Â·&nbsp; ðŸŒ€ {{t('Auto-esquive')}} &nbsp;Â·&nbsp; ðŸ”± {{t('Milice')}}
+  </div>
+
+  <div class="hw-attacks">
+    <div class="hw-empty" ng-show="(data.attacks|filter:filter()|filter:filterSearch).length === 0">
+      <div class="hw-empty-icon">ðŸ›¡</div>
+      <div>{{t('Aucune attaque dÃ©tectÃ©e')}}</div>
+    </div>
+    <div class="hw-attack" ng-repeat="attack in data.attacks|orderBy:data.predicate|filter:filter()|filter:filterSearch"
+         ng-class="{'hw-attack-cs': attack.cs, 'hw-attack-shared': !attack.isOwn}">
+      <div class="hw-attack-header">
+        <span class="hw-opt hw-info-btn" ng-show="attack.isOwn && attack.status !== 'struck' && attack.status !== 'deleted' && attack.status !== 'disappeared' && attack.status !== 'spam'" ng-click="openInfoPanel(attack, $event)" style="margin-right:4px;"><span class="hw-info-circle">â”</span> {{t('Infos')}}</span>
+        <span class="hw-attack-num">{{$index + 1}}</span>
+        <span class="hw-badge done-badge"   ng-show="attack.status === 'struck' || attack.status === 'deleted' || attack.status === 'disappeared' || attack.status === 'spam'">{{t('TerminÃ©e')}}</span>
+        <span class="hw-badge shared-badge" ng-show="!attack.isOwn">{{t('Ami')}}</span>
+        <span class="hw-badge cs-badge"     ng-show="attack.cs">CS</span>
+        <span class="hw-attack-icon">
+          <span ng-show="attack.cs">â›µ</span>
+          <span ng-show="!attack.cs">âš”ï¸</span>
+          <span ng-show="attack.dodge">&thinsp;ðŸŒ€</span>
+          <span ng-show="attack.militia">&thinsp;ðŸ”±</span>
+          <span ng-show="attack.spells && attack.spells.length > 0" ng-repeat="sid in attack.spells track by $index">
+            <span ng-class="'power_icon16x16 ' + sid" ng-attr-data-power-id="{{sid}}" style="display:inline-block;width:16px;height:16px;vertical-align:middle;margin-left:2px;cursor:help;" ng-attr-data-tooltip-html="{{spellTooltipHtml(sid)}}"></span>
+          </span>
+        </span>
+        <span class="hw-status-inline" ng-class="{
+            'hw-status-incoming':   attack.status === 'waiting',
+            'hw-status-confirmed':  attack.status === 'confirmed' || attack.status === 'militia_pending' || attack.status === 'dodge_pending',
+            'hw-status-dodging':    attack.status === 'dodge_pending',
+            'hw-status-struck':     attack.status === 'struck',
+            'hw-status-gone':       attack.status === 'disappeared' || attack.status === 'spam',
+            'hw-status-deleted':    attack.status === 'deleted'
+          }" style="margin-left:auto;font-size:7pt;">{{
+            attack.status === 'struck'         ? t('ðŸ’¥ A frappÃ©') :
+            attack.status === 'disappeared'    ? t('ðŸ‘» Disparue') :
+            attack.status === 'spam'           ? t('âŒ AnnulÃ©e') :
+            attack.status === 'deleted'        ? t('ðŸ—‘ SupprimÃ©e') :
+            attack.status === 'dodge_pending'  ? 'ðŸŒ€ ' + t('en cours') :
+            attack.status === 'militia_pending' || attack.status === 'scheduled' ? 'ðŸ”± ' + t('en cours') :
+            attack.status === 'confirmed'      ? 'âš ï¸ ' + t('En approche') :
+            'â³ ' + t('En route')
+          }}</span>
+        <span class="hw-remove" ng-show="attack.status === 'struck' || attack.status === 'deleted' || attack.status === 'disappeared' || attack.status === 'spam'" ng-click="remove(attack.to.id, attack.id)" title="{{t('Supprimer')}}">âœ•</span>
+      </div>
+      <div class="hw-attack-route">
+        <span ng-bind-html="attack.from.link|unsafe"></span>
+        <span class="hw-arrow">â†’</span>
+        <span ng-bind-html="attack.to.link|unsafe"></span>
+      </div>
+      <div class="hw-attack-footer">
+        <div class="hw-attack-footer-left">
+          <span class="hw-time">â± {{formatTs(attack.time)}}</span>
+        </div>
+        <div class="hw-options" ng-show="attack.isOwn && attack.status !== 'struck' && attack.status !== 'deleted' && attack.status !== 'disappeared' && attack.status !== 'spam'">
+          <span class="hw-opt" ng-class="{active: attack.militia}" ng-click="switchOption(attack, 'militia')">{{t('Milice')}}</span>
+          <span class="hw-opt hw-dodge-btn" ng-class="{active: attack.dodge}" style="position:relative;padding-right:2px;">
+            <span ng-click="switchOption(attack, 'dodge')">{{t('Esquive')}}{{dodgeEmoji(attack)}}</span><span class="hw-dodge-arrow" ng-click="openDodgeMenu(attack, $event)" title="{{t('Choisir le type d\'esquive')}}">â–¾</span>
+            <div class="hw-dodge-menu" ng-show="attack._dodgeMenuOpen" ng-style="attack._dodgeMenuStyle" ng-click="$event.stopPropagation()">
+              <div class="hw-dodge-menu-item" ng-click="setDodgeType(attack, 'land')">âš”ï¸ {{t('Terrestre')}}</div>
+              <div class="hw-dodge-menu-item" ng-click="setDodgeType(attack, 'naval')">âš“ {{t('Naval')}}</div>
+              <div class="hw-dodge-menu-item" ng-click="setDodgeType(attack, 'all')">âš”ï¸âš“ {{t('Tout')}}</div>
+            </div>
+          </span>
+          <span class="hw-opt hw-spell-btn" ng-show="attack.command_id" ng-click="openSpellPanel(attack)" ng-attr-data-tooltip-html="{{spellBtnTooltip()}}"><span class="gfb-favor-icon" style="display:inline-block;vertical-align:middle;margin-right:2px;"></span>{{t('Sort')}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
