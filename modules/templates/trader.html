@@ -1,0 +1,40 @@
+
+<div ng-app="bot" ng-controller="TraderController" class="trader">
+  
+
+  <fieldset>
+    <legend>{{t('Trader')}}</legend>
+
+    <div>
+      <span class="select-wrap"><select ng:model="data.custom.autotrade">
+        <option value="disabled">{{t('Disabled')}}</option>
+        <option value="consumer">{{t('Consumer')}}</option>
+        <option value="provider" ng:show="data.isOwn">{{t('Provider')}}</option>
+      </select></span>
+
+      <span ng:show="data.custom.autotrade=='consumer'">
+
+        <span class="resource_selector">
+          <div class="icon wood"></div>
+          <input type="text" maxlength="4" ng:model="data.custom.autotrade_wood" style="width: 50px;" />
+        </span>
+
+        <span class="resource_selector">
+          <div class="icon stone"></div>
+          <input type="text" maxlength="4" ng:model="data.custom.autotrade_stone" style="width: 50px;" />
+        </span>
+
+        <span class="resource_selector">
+          <div class="icon iron"></div>
+          <input type="text" maxlength="4" ng:model="data.custom.autotrade_iron" style="width: 50px;" />
+        </span>
+
+      </span>
+
+      <button ng:click="save()">{{t('Save')}}</button>
+
+    </div>
+
+  </fieldset>
+  
+</div>
