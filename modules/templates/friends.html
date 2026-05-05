@@ -1,0 +1,137 @@
+
+<div ng-app="bot" new class="window" ng-controller="FriendsController" style="width:430px;">
+
+  <div class="header">
+    <div class="actions"></div>
+    <div class="caption">{{t('ðŸ‘¥ Amis')}}</div>
+    <div class="controls">
+      <div class="control close" ng-click="closeWindow()" title="{{t('Fermer')}}"></div>
+    </div>
+  </div>
+
+  <div style="padding:8px;">
+
+    <!-- Message feedback -->
+    <div ng-show="msg" ng-class="msgType==='error' ? 'bs-msg-error' : 'bs-msg-ok'"
+         style="padding:6px 10px;border-radius:5px;margin-bottom:8px;font-size:7.5pt;font-weight:700;">
+      {{msg}}
+    </div>
+
+    <!-- Rechercher un ami -->
+    <div class="group">
+      <div class="caption">{{t('ðŸ‘¥ Ajouter un ami')}}</div>
+      <div style="font-size:7.5pt;color:var(--text-muted);margin-bottom:8px;">
+        {{t('Entrez le nom exact du joueur Grepolis (mÃªme monde uniquement).')}}
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input type="text" ng-model="search" placeholder="{{t('Nom du joueur...')}}"
+               style="flex:1;background:var(--bg-card);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:7.5pt;"
+               ng-keypress="$event.keyCode===13 && sendRequest()" />
+        <button class="bs-add-btn" ng-click="sendRequest()" ng-disabled="!search || searching">
+          {{searching ? "..." : t("+ Envoyer")}}
+        </button>
+      </div>
+    </div>
+
+    <!-- Demandes envoyÃ©es -->
+    <div class="group" ng-show="sent.length > 0">
+      <div class="caption">{{t('ðŸ“¤ Demandes envoyÃ©es')}}</div>
+      <div ng-repeat="f in sent"
+           style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(0,0,0,0.2);border:1px solid rgba(201,168,76,0.1);border-radius:5px;margin-bottom:4px;font-size:7.5pt;">
+        <span style="flex:1;font-weight:700;color:var(--text);">â³ {{f.name}}</span>
+        <span style="color:var(--text-muted);font-size:7pt;">{{t('En attente de rÃ©ponse')}}</span>
+        <button class="bs-add-btn" ng-click="reject(f)" style="padding:2px 8px;background:rgba(224,85,85,0.15);color:#e05555;border-color:rgba(224,85,85,0.4);">{{t('âœ• Annuler')}}</button>
+      </div>
+    </div>
+
+    <!-- Demandes reÃ§ues -->
+    <div class="group" ng-show="pending.length > 0">
+      <div class="caption">{{t('ðŸ“¬ Demandes reÃ§ues')}}</div>
+      <div ng-repeat="f in pending"
+           style="display:flex;align-items:center;gap:8px;padding:5px 6px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:5px;margin-bottom:4px;font-size:7.5pt;">
+        <span style="flex:1;font-weight:700;color:var(--gold);">âš”ï¸ <a class="gp_player_link" href="#" ng-attr-data-player-id="{{f.id}}" ng-attr-data-player-name="{{f.name}}" style="cursor:pointer;pointer-events:auto;color:inherit;">{{f.name}}</a></span>
+        <button class="bs-add-btn" ng-click="accept(f)" style="padding:2px 10px;">{{t('âœ… Accepter')}}</button>
+        <button class="bs-add-btn" ng-click="reject(f)" style="padding:2px 10px;background:rgba(224,85,85,0.15);color:#e05555;border-color:rgba(224,85,85,0.4);">{{t('âœ• Refuser')}}</button>
+      </div>
+    </div>
+
+    <!-- Liste d'amis -->
+    <div class="group">
+      <div class="caption">{{t('ðŸ‘¥ Mes amis')}} <span style="color:var(--text-muted);font-weight:400;">({{friends.length}})</span></div>
+      <div ng-show="friends.length===0" style="font-size:7.5pt;color:var(--text-muted);padding:8px 0;">
+        {{t("Aucun ami pour l'instant. Envoyez une demande ci-dessus !")}}
+      </div>
+      <div class="scrollbox gp-friends-list" style="max-height:300px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--gold-dark) transparent;">
+      <div ng-repeat="f in friends"
+           style="padding:6px 8px;background:rgba(0,0,0,0.2);border:1px solid rgba(201,168,76,0.1);border-radius:6px;margin-bottom:5px;">
+
+        <!-- Ligne 1 : Nom + conseillers | croix -->
+        <div style="display:flex;align-items:center;margin-bottom:5px;">
+          <span style="flex:1;font-weight:700;color:var(--gold);font-size:8pt;display:flex;align-items:center;gap:4px;min-width:0;overflow:hidden;">
+            <span
+                  ng-attr-data-tooltip-html="{{f.online ? '&lt;strong style=&quot;color:#4caf6e;&quot;&gt;' + t('En ligne') + '&lt;/strong&gt;&lt;br&gt;' + t('Le bot de cet ami est actif.') : '&lt;strong style=&quot;color:#aaa;&quot;&gt;' + t('Hors ligne') + '&lt;/strong&gt;' + (f.lastSeen ? '&lt;br&gt;&lt;span style=&quot;color:rgba(201,168,76,0.5);font-size:6.5pt;&quot;&gt;' + t('DerniÃ¨re connexion :') + '&lt;br&gt;' + (f.lastSeen | friendDate) + '&lt;/span&gt;' : '')}}"
+                  style="display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-right:3px;flex-shrink:0;cursor:help;"
+                  ng-class="f.online ? 'gp-friend-dot-online' : 'gp-friend-dot-offline'"></span>
+            ðŸ‘¤ <a class="gp_player_link" href="#" ng-attr-data-player-id="{{f.id}}" ng-attr-data-player-name="{{f.name}}" style="cursor:pointer;pointer-events:auto;">{{f.name}}</a>
+            <i class="bs-help" style="margin-left:4px;">?<span class="bs-tooltip">{{t('Choisissez ce que vous partagez avec')}} <strong>{{f.name}}</strong> {{t('sur le monde')}} <strong>{{f.world}}</strong>.<br><br><strong>{{t('âš”ï¸ HÃ©raut')}}</strong> {{t(': partage vos attaques entrantes en temps rÃ©el.')}}<br><br><strong>{{t('ðŸš© Commandant')}}</strong> {{t(': partage vos ordres de combat.')}}<br><br><strong><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTY1Ij48c3R5bGU+Lmh7ZmlsbDojOEI2OTE0fS5oaHtmaWxsOiNDOUE4NEN9Lmhze2ZpbGw6IzVDNDIwOX0uaGR7ZmlsbDojM0QyQjA1fS5we2ZpbGw6IzhCMUExQX0ucGh7ZmlsbDojQzIzMDMwfTwvc3R5bGU+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwtOCkiPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIyOCIgcng9IjgiIHJ5PSIyMiIgY2xhc3M9InBoIiB0cmFuc2Zvcm09InJvdGF0ZSgtOCwxMDAsMjgpIi8+PGVsbGlwc2UgY3g9IjEwMCIgY3k9IjI2IiByeD0iNSIgcnk9IjIwIiBjbGFzcz0icCIgdHJhbnNmb3JtPSJyb3RhdGUoLTgsMTAwLDI2KSIvPjxwYXRoIGQ9Ik03MCAzOCBRMTAwIDEwIDEzMCAzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzIzMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggNjggNDAgNTIgUTU1IDMwIDEwMCAyOCBRMTQ1IDMwIDE2MCA1MiBRMTcyIDY4IDE3MCAxMDBaIiBjbGFzcz0iaCIvPjxwYXRoIGQ9Ik01MCA5NSBRNDggNjggNTggNTQgUTcwIDM4IDEwMCAzNiBRMTMwIDM4IDEzOCA1MiBRMTQ2IDY0IDE0NCA5MFoiIGNsYXNzPSJoaCIgb3BhY2l0eT0iLjQiLz48cGF0aCBkPSJNMzAgMTAwIFEyOCAxMTUgMzUgMTI1IFE1MCAxNDAgMTAwIDE0MiBRMTUwIDE0MCAxNjUgMTI1IFExNzIgMTE1IDE3MCAxMDBaIiBjbGFzcz0iaHMiLz48cGF0aCBkPSJNMzAgMTAwIFEyMiAxMDggMjAgMTI1IFEyMiAxMzggMzUgMTQyIFE0MCAxMzggMzUgMTI1WiIgY2xhc3M9ImhzIi8+PHBhdGggZD0iTTE3MCAxMDAgUTE3OCAxMDggMTgwIDEyNSBRMTc4IDEzOCAxNjUgMTQyIFExNjAgMTM4IDE2NSAxMjVaIiBjbGFzcz0iaHMiLz48cmVjdCB4PSI5MyIgeT0iOTgiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMiIgcng9IjQiIGNsYXNzPSJoZCIvPjxyZWN0IHg9Ijk1IiB5PSIxMDAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGNsYXNzPSJocyIvPjxjaXJjbGUgY3g9IjU1IiBjeT0iNzAiIHI9IjQiIGNsYXNzPSJoZCIvPjxjaXJjbGUgY3g9IjU1IiBjeT0iNzAiIHI9IjIiIGNsYXNzPSJoaCIvPjxjaXJjbGUgY3g9IjE0NSIgY3k9IjcwIiByPSI0IiBjbGFzcz0iaGQiLz48Y2lyY2xlIGN4PSIxNDUiIGN5PSI3MCIgcj0iMiIgY2xhc3M9ImhoIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggNjggNDAgNTIgUTU1IDMwIDEwMCAyOCBRMTQ1IDMwIDE2MCA1MiBRMTcyIDY4IDE3MCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggMTE1IDM1IDEyNSBRNTAgMTQyIDEwMCAxNDQgUTE1NCAxNDIgMTY1IDEyNSBRMTcyIDExNSAxNzAgMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiM4QjY5MTQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==" style="width:12px;height:12px;vertical-align:middle;margin-right:3px;" />{{t('Troupes')}}</strong> {{t(': partage vos effectifs par ville (visible dans le profil joueur).')}}</span></i>
+            <span style="display:inline-flex;gap:3px;align-items:center;margin-left:6px;vertical-align:middle;">
+              <span ng-repeat="adv in [{id:'curator',x:'-40'},{id:'trader',x:'-80'},{id:'priest',x:'-60'},{id:'commander',x:'-20'},{id:'captain',x:'0'}]"
+                   style="display:inline-block;width:20px;height:20px;flex-shrink:0;border-radius:3px;cursor:default;background-image:url('https://gpfr.innogamescdn.com/images/game/autogenerated/advisors/advisors_40x40.jpg');background-size:100px 20px;"
+                   ng-attr-data-advisor-id="{{adv.id}}"
+                   ng-style="{backgroundPosition: adv.x + 'px 0px', filter: (f.advisors && f.advisors[adv.id]) ? 'none' : 'grayscale(1) brightness(0.4)'}" >
+              </span>
+            </span>
+          </span>
+          <span ng-click="remove(f)"
+                style="cursor:pointer;font-size:7pt;padding:2px 7px;border-radius:4px;border:1px solid;transition:all 0.2s;user-select:none;flex-shrink:0;"
+                ng-style="f._confirmDelete ? {'background':'rgba(224,85,85,0.35)','color':'#ff6b6b','border-color':'rgba(224,85,85,0.8)','font-weight':'700'} : {'background':'rgba(224,85,85,0.1)','color':'#e05555','border-color':'rgba(224,85,85,0.4)'}">
+            {{f._confirmDelete ? t('âš ï¸ Confirmer ?') : 'âœ•'}}
+          </span>
+        </div>
+
+        <!-- Ligne 2 : Toggles | modules premium -->
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;gap:6px;">
+            <span ng-click="togglePref(f, 'attacks')"
+                  style="cursor:pointer;font-size:7pt;padding:2px 7px;border-radius:4px;border:1px solid;user-select:none;"
+                  ng-class="f.share_attacks ? 'bs-toggle-on' : 'bs-toggle-off'">
+              {{t('âš”ï¸ HÃ©raut')}}
+            </span>
+            <span ng-click="togglePref(f, 'orders')"
+                  style="cursor:pointer;font-size:7pt;padding:2px 7px;border-radius:4px;border:1px solid;user-select:none;"
+                  ng-class="f.share_orders ? 'bs-toggle-on' : 'bs-toggle-off'">
+              {{t('ðŸš© Commandant')}}
+            </span>
+            <span ng-click="togglePref(f, 'troops')"
+                  style="cursor:pointer;font-size:7pt;padding:2px 6px 2px 5px;border-radius:4px;border:1px solid;user-select:none;display:inline-flex;align-items:center;gap:3px;"
+                  ng-class="f.share_troops ? 'bs-toggle-on' : 'bs-toggle-off'">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTY1Ij48c3R5bGU+Lmh7ZmlsbDojOEI2OTE0fS5oaHtmaWxsOiNDOUE4NEN9Lmhze2ZpbGw6IzVDNDIwOX0uaGR7ZmlsbDojM0QyQjA1fS5we2ZpbGw6IzhCMUExQX0ucGh7ZmlsbDojQzIzMDMwfTwvc3R5bGU+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwtOCkiPjxlbGxpcHNlIGN4PSIxMDAiIGN5PSIyOCIgcng9IjgiIHJ5PSIyMiIgY2xhc3M9InBoIiB0cmFuc2Zvcm09InJvdGF0ZSgtOCwxMDAsMjgpIi8+PGVsbGlwc2UgY3g9IjEwMCIgY3k9IjI2IiByeD0iNSIgcnk9IjIwIiBjbGFzcz0icCIgdHJhbnNmb3JtPSJyb3RhdGUoLTgsMTAwLDI2KSIvPjxwYXRoIGQ9Ik03MCAzOCBRMTAwIDEwIDEzMCAzOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjQzIzMDMwIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggNjggNDAgNTIgUTU1IDMwIDEwMCAyOCBRMTQ1IDMwIDE2MCA1MiBRMTcyIDY4IDE3MCAxMDBaIiBjbGFzcz0iaCIvPjxwYXRoIGQ9Ik01MCA5NSBRNDggNjggNTggNTQgUTcwIDM4IDEwMCAzNiBRMTMwIDM4IDEzOCA1MiBRMTQ2IDY0IDE0NCA5MFoiIGNsYXNzPSJoaCIgb3BhY2l0eT0iLjQiLz48cGF0aCBkPSJNMzAgMTAwIFEyOCAxMTUgMzUgMTI1IFE1MCAxNDAgMTAwIDE0MiBRMTUwIDE0MCAxNjUgMTI1IFExNzIgMTE1IDE3MCAxMDBaIiBjbGFzcz0iaHMiLz48cGF0aCBkPSJNMzAgMTAwIFEyMiAxMDggMjAgMTI1IFEyMiAxMzggMzUgMTQyIFE0MCAxMzggMzUgMTI1WiIgY2xhc3M9ImhzIi8+PHBhdGggZD0iTTE3MCAxMDAgUTE3OCAxMDggMTgwIDEyNSBRMTc4IDEzOCAxNjUgMTQyIFExNjAgMTM4IDE2NSAxMjVaIiBjbGFzcz0iaHMiLz48cmVjdCB4PSI5MyIgeT0iOTgiIHdpZHRoPSIxNCIgaGVpZ2h0PSIzMiIgcng9IjQiIGNsYXNzPSJoZCIvPjxyZWN0IHg9Ijk1IiB5PSIxMDAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyOCIgcng9IjMiIGNsYXNzPSJocyIvPjxjaXJjbGUgY3g9IjU1IiBjeT0iNzAiIHI9IjQiIGNsYXNzPSJoZCIvPjxjaXJjbGUgY3g9IjU1IiBjeT0iNzAiIHI9IjIiIGNsYXNzPSJoaCIvPjxjaXJjbGUgY3g9IjE0NSIgY3k9IjcwIiByPSI0IiBjbGFzcz0iaGQiLz48Y2lyY2xlIGN4PSIxNDUiIGN5PSI3MCIgcj0iMiIgY2xhc3M9ImhoIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggNjggNDAgNTIgUTU1IDMwIDEwMCAyOCBRMTQ1IDMwIDE2MCA1MiBRMTcyIDY4IDE3MCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0M5QTg0QyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTMwIDEwMCBRMjggMTE1IDM1IDEyNSBRNTAgMTQyIDEwMCAxNDQgUTE1NCAxNDIgMTY1IDEyNSBRMTcyIDExNSAxNzAgMTAwIiBmaWxsPSJub25lIiBzdHJva2U9IiM4QjY5MTQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==" style="width:11px;height:11px;display:block;" /> {{t('Troupes')}}
+            </span>
+          </div>
+          <div style="display:flex;gap:2px;">
+            <span ng-repeat="mod in premiumModDefs"
+                  style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:3px;font-size:11px;cursor:help;border:1px solid rgba(201,168,76,0.15);"
+                  ng-class="(f.isAdmin || (f.premiumModules && f.premiumModules[mod.id] && f.premiumModules[mod.id].active)) ? 'gp-mod-active' : 'gp-mod-inactive'"
+                  ng-attr-data-module-id="{{mod.id}}"
+                  ng-attr-data-module-active="{{!!(f.isAdmin || (f.premiumModules && f.premiumModules[mod.id] && f.premiumModules[mod.id].active))}}"
+                  ng-attr-data-module-expires="{{(f.premiumModules && f.premiumModules[mod.id] && f.premiumModules[mod.id].expiresAt) || ''}}"
+                  ng-bind-html="mod.icon|unsafe">
+            </span>
+            </span>
+          </div>
+        </div>
+
+<style>
+  .gp-friend-dot-online { background:#4caf6e; box-shadow:0 0 4px rgba(76,175,110,0.6); opacity:1; }
+  .gp-friend-dot-offline { background:#666; opacity:0.7; }
+  .gp-friends-list::-webkit-scrollbar { width: 4px; }
+  .gp-friends-list::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+  .gp-friends-list::-webkit-scrollbar-track { background: transparent; }
+</style>
+
+      </div>
+      </div><!-- /scrollbox friends -->
+    </div>
+
+  </div>
+</div>
