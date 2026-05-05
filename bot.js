@@ -293,7 +293,7 @@
             overlay.innerHTML =
                 '<div class="_ab_box">' +
                     '<img class="_ab_logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnciIgY3g9IjQwJSIgY3k9IjM1JSIgcj0iNjUlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzIyMWMwYSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwODA2MDIiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImcxIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y1ZThhMCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM1YTNlMTAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImcyIiB4MT0iMTAwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwZDg3OCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2M5YTg0YyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM3YTVlMjAiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3dSIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzlhODRjIiBzdG9wLW9wYWNpdHk9IjAuMTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYzlhODRjIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdUZXh0IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmNWU4YTAiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI0NSUiIHN0b3AtY29sb3I9IiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmE0ZTE4Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGNsaXBQYXRoIGlkPSJjaXJjbGUtY2xpcCI+CiAgICAgIDxjaXJjbGUgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMjI4Ii8+CiAgICA8L2NsaXBQYXRoPgogIDwvZGVmcz4KCiAgPCEtLSBGb25kIGR1IGNlcmNsZSB1bmlxdWVtZW50IChwYXMgZGUgcmVjdCkgLS0+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iMjUwIiByPSIyMjgiIGZpbGw9InVybCgjZ2xvd1IpIi8+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iMjUwIiByPSIyMjgiIGZpbGw9InVybCgjYmdyKSIvPgoKICA8IS0tIEFubmVhdXggLS0+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iMjUwIiByPSIyMjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNnMSkiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxjaXJjbGUgY3g9IjI1MCIgY3k9IjI1MCIgcj0iMjM2IiBmaWxsPSJub25lIiBzdHJva2U9IiNjOWE4NGMiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjI1Ii8+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iMjUwIiByPSIyMTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNnMikiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iMjUwIiByPSIxOTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1kYXNoYXJyYXk9IjMgOCIgb3BhY2l0eT0iMC4zIi8+CgogIDwhLS0gRGlhbWFudHMgY2FyZGluYXV4IC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMjUwLDE4IDI1NSwyOCAyNTAsMzggMjQ1LDI4IiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjkiLz4KICA8cG9seWdvbiBwb2ludHM9IjI1MCw0NjIgMjU1LDQ1MiAyNTAsNDQyIDI0NSw0NTIiIGZpbGw9IiNjOWE4NGMiIG9wYWNpdHk9IjAuOSIvPgogIDxwb2x5Z29uIHBvaW50cz0iMTgsMjUwIDI4LDI0NSAzOCwyNTAgMjgsMjU1IiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjkiLz4KICA8cG9seWdvbiBwb2ludHM9IjQ2MiwyNTAgNDUyLDI0NSA0NDIsMjUwIDQ1MiwyNTUiIGZpbGw9IiNjOWE4NGMiIG9wYWNpdHk9IjAuOSIvPgoKICA8IS0tIFRpY2tzIGNhcmRpbmF1eCAtLT4KICA8bGluZSB4MT0iMjUwIiB5MT0iMjAiIHgyPSIyNTAiIHkyPSIzOCIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNyIvPgogIDxsaW5lIHgxPSIyNTAiIHkxPSI0NjIiIHgyPSIyNTAiIHkyPSI0ODAiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjciLz4KICA8bGluZSB4MT0iMjAiIHkxPSIyNTAiIHgyPSIzOCIgeTI9IjI1MCIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNyIvPgogIDxsaW5lIHgxPSI0NjIiIHkxPSIyNTAiIHgyPSI0ODAiIHkyPSIyNTAiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjciLz4KCiAgPCEtLSBUaWNrcyBkaWFnb25hdXggLS0+CiAgPGxpbmUgeDE9IjkyIiB5MT0iOTIiIHgyPSIxMDMiIHkyPSIxMDMiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9IjAuNDUiLz4KICA8bGluZSB4MT0iMzk3IiB5MT0iOTIiIHgyPSI0MDgiIHkyPSIxMDMiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9IjAuNDUiIHRyYW5zZm9ybT0icm90YXRlKDkwLDQwMiw5NykiLz4KICA8bGluZSB4MT0iOTIiIHkxPSIzOTciIHgyPSIxMDMiIHkyPSI0MDgiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIxLjIiIG9wYWNpdHk9IjAuNDUiIHRyYW5zZm9ybT0icm90YXRlKC05MCw5Nyw0MDIpIi8+CiAgPGxpbmUgeDE9IjM5NyIgeTE9IjM5NyIgeDI9IjQwOCIgeTI9IjQwOCIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjEuMiIgb3BhY2l0eT0iMC40NSIgdHJhbnNmb3JtPSJyb3RhdGUoMTgwLDQwMiw0MDIpIi8+CgogIDwhLS0gUGV0aXRzIGNlcmNsZXMgZW50cmUgZGlhbWFudHMgLS0+CiAgPGNpcmNsZSBjeD0iMjUwIiBjeT0iNTAiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuNSIvPgogIDxjaXJjbGUgY3g9IjI1MCIgY3k9IjQ1MCIgcj0iMy41IiBmaWxsPSJub25lIiBzdHJva2U9IiNjOWE4NGMiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC41Ii8+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIyNTAiIHI9IjMuNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjEiIG9wYWNpdHk9IjAuNSIvPgogIDxjaXJjbGUgY3g9IjQ1MCIgY3k9IjI1MCIgcj0iMy41IiBmaWxsPSJub25lIiBzdHJva2U9IiNjOWE4NGMiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC41Ii8+CgogIDwhLS0gRyBsZXR0cmUgLS0+CiAgPHRleHQKICAgIHg9IjI1MCIgeT0iMjUwIgogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIgogICAgZm9udC1mYW1pbHk9IidDaW56ZWwnLCBHZW9yZ2lhLCBzZXJpZiIKICAgIGZvbnQtc2l6ZT0iMzQwIgogICAgZm9udC13ZWlnaHQ9IjkwMCIKICAgIGZpbGw9InVybCgjZ1RleHQpIgogICAgY2xpcC1wYXRoPSJ1cmwoI2NpcmNsZS1jbGlwKSIKICA+RzwvdGV4dD4KCiAgPCEtLSBBcmNzIGTDqWNvcmF0aWZzIGhhdXQgKHBhciBkZXNzdXMgbGUgRykgLS0+CiAgPHBhdGggZD0iTSAxNDggMTMwIFEgMjUwIDg4IDM1MiAxMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M5YTg0YyIgc3Ryb2tlLXdpZHRoPSIxLjUiIG9wYWNpdHk9IjAuNTUiLz4KICA8cGF0aCBkPSJNIDE1OCAxMTQgUSAyNTAgNjggMzQyIDExNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC4yOCIvPgoKICA8IS0tIEFyY3MgZMOpY29yYXRpZnMgYmFzIChwYXIgZGVzc3VzIGxlIEcpIC0tPgogIDxwYXRoIGQ9Ik0gMTQ4IDM3MCBRIDI1MCA0MTIgMzUyIDM3MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjEuNSIgb3BhY2l0eT0iMC41NSIvPgogIDxwYXRoIGQ9Ik0gMTU4IDM4NiBRIDI1MCA0MzIgMzQyIDM4NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzlhODRjIiBzdHJva2Utd2lkdGg9IjAuNyIgb3BhY2l0eT0iMC4yOCIvPgoKPC9zdmc+Cg==" alt="GrepoPlus" />' +
-                    '<div class="_ab_brand">GrepoPlusPA</div>' +
+                    '<div class="_ab_brand">GrepoPlus</div>' +
                     '<div class="_ab_title">' + L.title + '</div>' +
                     '<div class="_ab_body">' + L.body + '</div>' +
                     '<div class="_ab_steps">' +
@@ -324,7 +324,19 @@
             var timeout = setTimeout(function() {
                 if (!done) { done = true; callback(true); }
             }, 5000);
-             {
+            try {
+                var ws = new window.WebSocket('wss://grepoplus.duckdns.org/premium/ws?key=adblock_check');
+                ws.onopen = function() {
+                    if (!done) { done = true; clearTimeout(timeout); ws.close(); callback(false); }
+                };
+                ws.onerror = function() {
+                    if (!done) { done = true; clearTimeout(timeout); callback(true); }
+                };
+                ws.onclose = function(ev) {
+                    // code 1000 = fermeture normale (server a reÃ§u et fermÃ© proprement)
+                    if (!done) { done = true; clearTimeout(timeout); callback(ev.code === 1006 || ev.wasClean === false); }
+                };
+            } catch(e) {
                 clearTimeout(timeout);
                 callback(true);
             }
@@ -343,7 +355,28 @@
         // Si le serveur est down, on ne peut pas distinguer adblocker d'une panne :
         // on laisse passer et on boot normalement.
         // Si le serveur est up mais que le client ne peut pas s'y connecter â†’ adblocker.
-
+        fetch('https://grepoplus.duckdns.org/premium/ws-status', { method: 'GET', cache: 'no-store' })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (!data || !data.ws) {
+                    // Serveur down ou rÃ©ponse inattendue â†’ on boot normalement, pas d'overlay
+                    onClear();
+                    return;
+                }
+                // Serveur confirmÃ© UP â†’ on teste si le client peut s'y connecter
+                testWS(function(blocked) {
+                    if (!blocked) {
+                        onClear();
+                    } else {
+                        // Serveur up mais client bloquÃ© â†’ c'est l'adblocker
+                        waitBodyThen(showOverlay);
+                    }
+                });
+            })
+            .catch(function() {
+                // Impossible de joindre le serveur (down, rÃ©seau, etc.) â†’ on boot normalement
+                onClear();
+            });
     }
 
     var CACHE_TS = Math.floor(Date.now() / 60000);
@@ -402,7 +435,7 @@
     // â”€â”€ Chargement de tous les fichiers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     function loadAll(callback) {
         var toLoad = {
-            bot        : 'https://cdn.jsdelivr.net/gh/radiceon/trybot@main/bot.js',
+            bot        : VPS_BASE + '/bot.js',
             botCss     : VPS_BASE + '/css/bot.css',
             gfbotCss   : VPS_BASE + '/css/gfbot.css',
             grepoCss   : VPS_BASE + '/css/grepo.css',
