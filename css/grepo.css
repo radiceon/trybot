@@ -1,0 +1,302 @@
+/* â”€â”€ Conteneur notifications â€” thÃ¨me grec antique â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages {
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 20px !important;
+  left: auto !important;
+  width: 420px !important;
+  max-width: calc(100vw - 44px) !important;
+  z-index: 99999 !important;
+  background: transparent !important;
+  pointer-events: none !important;
+}
+/* â”€â”€ Banderoles communes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .message,
+.bot.messages .info,
+.bot.messages .error,
+.bot.messages .warning,
+.bot.messages .attack,
+.bot.messages .ally {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  pointer-events: all !important;
+  text-align: left !important;
+  border-radius: 2px 12px 12px 2px !important;
+  font-size: 11.5pt !important;
+  font-weight: 400 !important;
+  line-height: 1.55 !important;
+  padding: 14px 16px 18px 58px !important;
+  position: relative !important;
+  margin-top: 10px !important;
+  background-repeat: no-repeat !important;
+  background-position: 18px 50% !important;
+  background-size: 24px 24px !important;
+  border-left: none !important;
+  border-top: 1px solid !important;
+  border-right: 1px solid !important;
+  border-bottom: 1px solid !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.85) !important;
+  animation: gp-notif-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both !important;
+  overflow: hidden !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  transition: transform 0.15s ease !important;
+}
+.bot.messages .message:hover,
+.bot.messages .info:hover,
+.bot.messages .error:hover,
+.bot.messages .warning:hover,
+.bot.messages .attack:hover,
+.bot.messages .ally:hover {
+  transform: translateX(-3px) !important;
+}
+@keyframes gp-notif-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* Barre latÃ©rale gauche */
+.bot.messages .message::before,
+.bot.messages .info::before,
+.bot.messages .error::before,
+.bot.messages .warning::before,
+.bot.messages .attack::before,
+.bot.messages .ally::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 4px !important;
+  border-radius: 2px 0 0 2px !important;
+}
+/* Reflet haut */
+.bot.messages .message::after,
+.bot.messages .info::after,
+.bot.messages .error::after,
+.bot.messages .warning::after,
+.bot.messages .attack::after,
+.bot.messages .ally::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 4px !important;
+  right: 0 !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent) !important;
+}
+/* â”€â”€ Caption â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .message .caption,
+.bot.messages .info .caption,
+.bot.messages .error .caption,
+.bot.messages .warning .caption,
+.bot.messages .attack .caption,
+.bot.messages .ally .caption {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 0 0 5px 0 !important;
+  margin-bottom: 5px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  font-family: Georgia, serif !important;
+  font-weight: 700 !important;
+  font-size: 8.5pt !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+  color: #c9a84c !important;
+}
+/* Badge module */
+.bot.messages .caption .module {
+  font-size: 7pt !important;
+  letter-spacing: 0.8px !important;
+  padding: 1px 6px !important;
+  border-radius: 3px !important;
+  border: 1px solid !important;
+  font-weight: 400 !important;
+  opacity: 0.75 !important;
+  text-transform: uppercase !important;
+}
+/* Badge GrepoPlus */
+.bot.messages .notif-gp-badge {
+  margin-left: auto !important;
+  font-family: Georgia, serif !important;
+  font-size: 6.5pt !important;
+  font-weight: 700 !important;
+  color: #8a6a1a !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(138, 106, 26, 0.1)) !important;
+  border: 1px solid rgba(201, 168, 76, 0.25) !important;
+  border-radius: 4px !important;
+  padding: 1px 6px !important;
+  pointer-events: none !important;
+  flex-shrink: 0 !important;
+}
+/* Croix fermeture */
+.bot.messages .notif-close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  opacity: 0.5 !important;
+  font-size: 11px !important;
+  font-family: Arial, sans-serif !important;
+  line-height: 1 !important;
+  transition: opacity 0.15s !important;
+  z-index: 1 !important;
+  pointer-events: all !important;
+}
+.bot.messages .notif-close:hover {
+  opacity: 1 !important;
+}
+/* Ornements */
+.bot.messages .notif-ornament {
+  position: absolute !important;
+  bottom: 5px !important;
+  right: 14px !important;
+  font-size: 7px !important;
+  letter-spacing: 2px !important;
+  opacity: 0.2 !important;
+  font-family: Georgia, serif !important;
+  pointer-events: none !important;
+}
+/* â”€â”€ INFO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .info {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjciIGZpbGw9InJnYmEoNzYsMTc1LDExMCwwLjE1KSIgc3Ryb2tlPSIjNGNhZjZlIiBzdHJva2Utd2lkdGg9IjEuNCIvPjx0ZXh0IHg9IjgiIHk9IjEyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGNhZjZlIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZvbnQtc3R5bGU9Iml0YWxpYyI+aTwvdGV4dD48L3N2Zz4=") !important;
+  background-color: rgba(8, 35, 20, 0.97) !important;
+  border-color: rgba(76, 175, 110, 0.35) !important;
+  color: #b8e8ca !important;
+}
+.bot.messages .info::before {
+  background: linear-gradient(180deg, #4caf6e, #2d7a48) !important;
+}
+.bot.messages .info .notif-close {
+  color: #4caf6e !important;
+}
+.bot.messages .info .caption .module {
+  color: #4caf6e !important;
+  border-color: rgba(76, 175, 110, 0.35) !important;
+  background: rgba(76, 175, 110, 0.08) !important;
+}
+/* â”€â”€ WARNING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .warning {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0icmdiYSgyMDEsMTY4LDc2LDAuMTUpIiBzdHJva2U9IiNmMGQwODAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNOCAyTDEgMTRoMTRMOCAyeiIvPjxsaW5lIHgxPSI4IiB5MT0iNi41IiB4Mj0iOCIgeTI9IjEwIiBzdHJva2U9IiNmMGQwODAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSI4IiBjeT0iMTIiIHI9IjAuOCIgZmlsbD0iI2YwZDA4MCIvPjwvc3ZnPg==") !important;
+  background-color: rgba(30, 22, 5, 0.97) !important;
+  border-color: rgba(201, 168, 76, 0.35) !important;
+  color: #e8d090 !important;
+}
+.bot.messages .warning::before {
+  background: linear-gradient(180deg, #f0d080, #c9a84c) !important;
+}
+.bot.messages .warning .notif-close {
+  color: #f0d080 !important;
+}
+.bot.messages .warning .caption .module {
+  color: #f0d080 !important;
+  border-color: rgba(201, 168, 76, 0.35) !important;
+  background: rgba(201, 168, 76, 0.08) !important;
+}
+/* â”€â”€ ERROR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .error {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjYuNSIgZmlsbD0icmdiYSgyMjQsODUsODUsMC4xNSkiIHN0cm9rZT0iI2UwNTU1NSIgc3Ryb2tlLXdpZHRoPSIxLjQiLz48bGluZSB4MT0iNS41IiB5MT0iNS41IiB4Mj0iMTAuNSIgeTI9IjEwLjUiIHN0cm9rZT0iI2UwNTU1NSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIxMC41IiB5MT0iNS41IiB4Mj0iNS41IiB5Mj0iMTAuNSIgc3Ryb2tlPSIjZTA1NTU1IiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+") !important;
+  background-color: rgba(32, 5, 5, 0.97) !important;
+  border-color: rgba(224, 85, 85, 0.35) !important;
+  color: #f0b0b0 !important;
+}
+.bot.messages .error::before {
+  background: linear-gradient(180deg, #e05555, #a03030) !important;
+}
+.bot.messages .error .notif-close {
+  color: #e05555 !important;
+}
+.bot.messages .error .caption .module {
+  color: #e05555 !important;
+  border-color: rgba(224, 85, 85, 0.35) !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+/* â”€â”€ ATTACK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .attack {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGxpbmUgeDE9IjMiIHkxPSIxMyIgeDI9IjExLjUiIHkyPSIyIiBzdHJva2U9IiNlMDU1NTUiIHN0cm9rZS13aWR0aD0iMS42IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTEuNSIgeTE9IjIiIHgyPSIxMy41IiB5Mj0iNCIgc3Ryb2tlPSIjZTA1NTU1IiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjMiIHkxPSIxMyIgeDI9IjEzLjUiIHkyPSI0IiBzdHJva2U9IiNlMDU1NTUiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSI1LjUiIHkxPSIxMC41IiB4Mj0iOC41IiB5Mj0iNy41IiBzdHJva2U9IiNlMDU1NTUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iNC41IiB5MT0iOCIgeDI9IjkuNSIgeTI9IjEwLjUiIHN0cm9rZT0iI2UwNTU1NSIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC43Ii8+PGNpcmNsZSBjeD0iMi41IiBjeT0iMTMuNSIgcj0iMS4yIiBmaWxsPSIjZTA1NTU1IiBvcGFjaXR5PSIwLjgiLz48L3N2Zz4=") !important;
+  background-color: rgba(32, 5, 5, 0.97) !important;
+  border-color: rgba(224, 85, 85, 0.35) !important;
+  color: #f0b0b0 !important;
+}
+.bot.messages .attack::before {
+  background: linear-gradient(180deg, #e05555, #a03030) !important;
+}
+.bot.messages .attack .notif-close {
+  color: #e05555 !important;
+}
+.bot.messages .attack .caption .module {
+  color: #e05555 !important;
+  border-color: rgba(224, 85, 85, 0.35) !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+/* â”€â”€ ALLY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .ally {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGxpbmUgeDE9IjMiIHkxPSIxMyIgeDI9IjExLjUiIHkyPSIyIiBzdHJva2U9IiNmMGQwODAiIHN0cm9rZS13aWR0aD0iMS42IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMTEuNSIgeTE9IjIiIHgyPSIxMy41IiB5Mj0iNCIgc3Ryb2tlPSIjZjBkMDgwIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjMiIHkxPSIxMyIgeDI9IjEzLjUiIHkyPSI0IiBzdHJva2U9IiNmMGQwODAiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9IjAuNSIvPjxsaW5lIHgxPSI1LjUiIHkxPSIxMC41IiB4Mj0iOC41IiB5Mj0iNy41IiBzdHJva2U9IiNmMGQwODAiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iNC41IiB5MT0iOCIgeDI9IjkuNSIgeTI9IjEwLjUiIHN0cm9rZT0iI2YwZDA4MCIgc3Ryb2tlLXdpZHRoPSIxLjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC43Ii8+PGNpcmNsZSBjeD0iMi41IiBjeT0iMTMuNSIgcj0iMS4yIiBmaWxsPSIjZjBkMDgwIiBvcGFjaXR5PSIwLjgiLz48L3N2Zz4=") !important;
+  background-color: rgba(30, 22, 5, 0.97) !important;
+  border-color: rgba(201, 168, 76, 0.35) !important;
+  color: #e8d090 !important;
+}
+.bot.messages .ally::before {
+  background: linear-gradient(180deg, #f0d080, #c9a84c) !important;
+}
+.bot.messages .ally .notif-close {
+  color: #f0d080 !important;
+}
+.bot.messages .ally .caption .module {
+  color: #f0d080 !important;
+  border-color: rgba(201, 168, 76, 0.35) !important;
+  background: rgba(201, 168, 76, 0.08) !important;
+}
+/* â”€â”€ MESSAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.messages .message {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBvbHlnb24gcG9pbnRzPSI4LDIgMTAsNi41IDE1LDcgMTEuNSwxMC41IDEyLjUsMTUgOCwxMi41IDMuNSwxNSA0LjUsMTAuNSAxLDcgNiw2LjUiIHN0cm9rZT0iIzdhYThlOCIgc3Ryb2tlLXdpZHRoPSIxLjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9InJnYmEoOTEsMTQxLDIxNywwLjE1KSIvPjwvc3ZnPg==") !important;
+  background-color: rgba(10, 18, 35, 0.97) !important;
+  border-color: rgba(91, 141, 217, 0.35) !important;
+  color: #a8c8f0 !important;
+}
+.bot.messages .message::before {
+  background: linear-gradient(180deg, #7aa8e8, #3d6ab5) !important;
+}
+.bot.messages .message .notif-close {
+  color: #7aa8e8 !important;
+}
+.bot.messages .message .caption .module {
+  color: #7aa8e8 !important;
+  border-color: rgba(91, 141, 217, 0.35) !important;
+  background: rgba(91, 141, 217, 0.08) !important;
+}
+/* â”€â”€ Overlay captcha â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.bot.cape {
+  display: block !important;
+  position: fixed !important;
+  right: 20px !important;
+  bottom: 80px !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 16px !important;
+  z-index: 10000 !important;
+  background: linear-gradient(160deg, #0d1117, #151c26) !important;
+  border: 1px solid rgba(201, 168, 76, 0.4) !important;
+  border-left: 3px solid #c9a84c !important;
+  border-radius: 8px !important;
+  color: #c9a84c !important;
+  font-size: 10pt !important;
+  font-family: Georgia, serif !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+}
