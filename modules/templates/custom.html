@@ -1,0 +1,26 @@
+
+<div class="customization" ng-app="bot" ng-controller="customController" ng-init="data.activeTab=2" ng-show="data.isOwn">
+
+  <div class="cust-header" style="display:flex;align-items:center;justify-content:space-between;">
+    <span class="cust-tab active">{{t('HÃ©raut â€” Auto-esquive')}}</span>
+    <span style="font-family:Georgia,serif;font-size:7pt;font-weight:700;color:#8a6a1a;letter-spacing:1.5px;background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(138,106,26,0.1));border:1px solid rgba(201,168,76,0.25);border-radius:4px;padding:2px 7px;">{{t('GrepoPlus')}}</span>
+  </div>
+
+  <div class="cust-body">
+
+    <div class="cust-section">
+      <div class="cust-row">
+        <span class="cust-label">{{t('Auto-esquive')}}</span>
+        <span class="select-wrap"><select class="cust-select" ng-model="data.c.automaneuver">
+          <option value="global">{{t('Global')}}</option>
+          <option value="disabled">{{t('DÃ©sactivÃ©')}}</option>
+          <option value="enabled">{{t('Actif')}}</option>
+        </select></span>
+      </div>
+  </div>
+
+  <div class="cust-footer">
+    <button class="cust-btn" ng-click="save()">{{t('Sauvegarder')}}</button>
+  </div>
+
+</div>
